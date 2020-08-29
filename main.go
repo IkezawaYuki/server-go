@@ -26,3 +26,10 @@ func hello(c echo.Context) error {
 }
 
 
+func login(c echo.Context) error{
+
+}
+
+func callback(c echo.Context) error{
+	
+}
