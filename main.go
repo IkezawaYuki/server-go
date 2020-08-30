@@ -31,10 +31,16 @@ func main(){
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
+
+
+	e.GET("/auth/callback", callback)
+	e.GET("/v1/auth/login", login)
 
 	// Routes
 	e.GET("/", hello)
 	e.GET("/clear", clear)
+
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8080"))
@@ -54,7 +60,7 @@ func login(c echo.Context) error{
 	if err != nil{
 		panic(err)
 	}
-	return c.Redirect(302, loginURL)
+	return c.JSON(200, loginURL)
 }
 
 func callback(c echo.Context) error{
@@ -74,9 +80,9 @@ func callback(c echo.Context) error{
 	}
 
 	fmt.Println(user)
-	return c.Redirect(302, "/clear")
+	return c.JSON(200, "YES!!!")
 }
 
 func clear(c echo.Context) error{
-	return c.String(http.StatusOK, "clear!!!!!")
+	return c.JSON(http.StatusOK, "clear!!!!!")
 }
